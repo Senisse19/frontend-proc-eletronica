@@ -1,36 +1,30 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ============================================================
+# .gitignore - Frontend SERPRO (Next.js)
+# ============================================================
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
+# Segurança - NUNCA commitar
+.env
+.env.local
+.env.*.local
 
-# testing
-/coverage
+# Next.js
+.next/
+out/
 
-# next.js
-/.next/
-/out/
+# Vercel
+.vercel/
 
-# production
-/build
+# Node
+node_modules/
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs
+*.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
-# local env files
-.env*.local
+# IDEs
+.vscode/
+.idea/
 
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# OS
+.DS_Store
+Thumbs.db

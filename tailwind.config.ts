@@ -11,6 +11,16 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        brand: {
+          bronze: "#927245",
+          duna: "#D5AE77",
+          taupe: "#322E2B",
+          snow: "#FDFDFD",
+          light: "#EBEBEB",
+          graphite: "#1F1F1F",
+          neutral: "#CDCDCD",
+          dark: "#828384",
+        }
       },
     },
   },
