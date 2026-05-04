@@ -457,8 +457,8 @@ function ResultCard({ result, doc }: { result: ConsultaResult; doc: string }) {
 function ProcuracaoCard({ procuracao, index }: { procuracao: Procuracao; index: number }) {
   const p = procuracao as Record<string, unknown>;
   const sistema = String(procuracao.sistemaAutorizado ?? p["sistema"] ?? `Procuração ${index + 1}`);
-  const expiracao = procuracao.dataExpiracao ?? p["dataFim"] ?? p["validade"];
-  const inicio = procuracao.dataInicio ?? p["dataInicio"];
+  const expiracao = (procuracao.dataExpiracao ?? p["dataFim"] ?? p["validade"] ?? null) as string | null;
+  const inicio = (procuracao.dataInicio ?? p["dataInicio"] ?? null) as string | null;
 
   const labelMap: Record<string, string> = {
     dtexpiracao: "Expiração", dtinicio: "Início", nrsistemas: "Nº Sistemas",
