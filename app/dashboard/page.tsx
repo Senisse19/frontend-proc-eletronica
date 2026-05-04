@@ -486,10 +486,33 @@ function ProcuracaoCard({ procuracao, index }: { procuracao: Procuracao; index: 
 }
 
 function DataRow({ label, value }: { label: string; value: string }) {
+  if (label === "Sistemas" && value.includes(",")) {
+    const sistemasList = value.split(",").map((s) => s.trim()).filter(Boolean);
+    return (
+      <details className="col-span-2 mt-3 group rounded-lg border border-white/5 bg-white/[0.02]">
+        <summary className="cursor-pointer list-none flex items-center justify-between p-3 text-white/50 hover:text-white/70 text-xs font-medium transition-colors">
+          <span>{label} ({sistemasList.length})</span>
+          <span className="transition-transform group-open:rotate-180">▾</span>
+        </summary>
+        <div className="p-3 pt-0 mt-1">
+          <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+            {sistemasList.map((sys, idx) => (
+              <span key={idx} className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[10px] leading-tight text-white/70">
+                {sys}
+              </span>
+            ))}
+          </div>
+        </div>
+      </details>
+    );
+  }
+
+  const isLong = value.length > 50;
+
   return (
-    <div className="flex flex-col gap-0.5">
+    <div className={`flex flex-col gap-0.5 ${isLong ? 'col-span-2 mt-2' : ''}`}>
       <span className="text-white/30">{label}</span>
-      <span className="font-medium text-white/70">{value}</span>
+      <span className="font-medium text-white/70 leading-relaxed">{value}</span>
     </div>
   );
 }
