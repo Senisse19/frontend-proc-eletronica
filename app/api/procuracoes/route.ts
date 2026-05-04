@@ -27,20 +27,33 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({ documento: raw }),
     });
 
-    const data = await upstream.json();
-
     if (!upstream.ok) {
-      return NextResponse.json(
-        { error: data.detail ?? "Erro ao consultar o SERPRO." },
-        { status: upstream.status }
-      );
+      let errorMsg = `Erro no backend (Status ${upstream.status})`;
+      try {
+        const text = await upstream.text();
+        try {
+          const json = JSON.parse(text);
+          if (json.detail) {
+            errorMsg = typeof json.detail === "string" ? json.detail : JSON.stringify(json.detail);
+          } else {
+            errorMsg = text;
+          }
+        } catch {
+          errorMsg = text;
+        }
+      } catch (e) {
+        // ignore
+      }
+      return NextResponse.json({ error: errorMsg }, { status: upstream.status });
     }
 
+    const data = await upstream.json();
     return NextResponse.json(data);
-  } catch (err) {
+  } catch (err: unknown) {
     console.error("[procuracoes route] upstream error:", err);
+    const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { error: "Não foi possível conectar ao serviço backend." },
+      { error: `Não foi possível conectar ao serviço backend: ${message}` },
       { status: 503 }
     );
   }
