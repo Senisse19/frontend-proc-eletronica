@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
         } catch {
           errorMsg = text;
         }
-      } catch (e) {
+      } catch {
         // ignore
       }
       return NextResponse.json({ error: errorMsg }, { status: upstream.status });
